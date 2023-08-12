@@ -32,21 +32,20 @@ public class BuildConfiguration {
   public var apiBaseURL: URL {
     switch appEnvironment {
     case .debugDevelopment, .debugProduction:
-      return URL(string: "http://api.openweathermap.org/data/2.5")!
+      return URL(string: "http://api.openweathermap.org/data/")!
     case .debugStaging, .releaseStaging:
-      return URL(string: "http://api.openweathermap.org/data/2.5")!
+      return URL(string: "http://api.openweathermap.org/data/")!
     case .releaseDevelopment, .releaseProduction:
-      return URL(string: "http://api.openweathermap.org/data/2.5")!
+      return URL(string: "http://api.openweathermap.org/data/")!
     }
   }
   
   /// Initializes the build configuration based on the current bundle.
   /// Defaults to "Debug Production" environment.
   public init(environment: AppEnvironment) {
-    guard let currentConfiguration = Bundle.main.object(forInfoDictionaryKey: "Configuration") as? String else {
-      fatalError("Configuration missing for bundle")
-    }
-
+//    guard let currentConfiguration = Bundle.main.object(forInfoDictionaryKey: "Configuration") as? String else {
+//      fatalError("Configuration missing for bundle")
+//    }
     appEnvironment = environment
   }
 }

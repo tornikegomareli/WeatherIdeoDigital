@@ -7,9 +7,18 @@
 
 import Foundation
 
-struct WeatherCondition: Codable {
+struct WeatherCondition {
   let conditionID: Int
   let category: String
   let description: String
   let iconID: String
+}
+
+extension WeatherCondition: Codable {
+  enum CodingKeys: String, CodingKey {
+    case conditionID = "id"
+    case iconID = "icon"
+    case description = "description"
+    case category = "main"
+  }
 }

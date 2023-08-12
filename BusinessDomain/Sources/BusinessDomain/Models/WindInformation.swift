@@ -9,6 +9,4 @@ import Foundation
 
 struct WindInformation: Codable {
   let speed: Double
-  let directionDegrees: Int
-  let gustSpeed: Double
 }

@@ -7,18 +7,24 @@
 
 import Foundation
 
-public struct WeatherReport: Codable {
+public struct WeatherReport {
   let coordinates: Coordinates
   let weatherConditions: [WeatherCondition]
-  let baseStation: String
   let mainWeatherData: WeatherData
-  let visibility: Int
   let windInformation: WindInformation
-  let cloudCoverage: CloudCoverage
-  let timestamp: Int
   let systemInformation: SystemInformation
-  let timezoneOffset: Int
   let cityID: Int
   let cityName: String
-  let statusCode: Int
+}
+
+extension WeatherReport: Codable {
+  enum CodingKeys: String, CodingKey {
+    case coordinates = "coord"
+    case weatherConditions = "weather"
+    case windInformation = "wind"
+    case systemInformation = "sys"
+    case mainWeatherData = "main"
+    case cityID  = "id"
+    case cityName = "name"
+  }
 }

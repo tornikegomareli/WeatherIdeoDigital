@@ -7,7 +7,14 @@
 
 import Foundation
 
-struct Coordinates: Codable {
+struct Coordinates {
   let longitude: Double
   let latitude: Double
+}
+
+extension Coordinates: Codable {
+  enum CodingKeys: String, CodingKey {
+    case longitude = "lon"
+    case latitude = "lat"
+  }
 }
