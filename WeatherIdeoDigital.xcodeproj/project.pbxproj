@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7945FFAF2A87E47B002D87A0 /* App+Depedencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7945FFAE2A87E47B002D87A0 /* App+Depedencies.swift */; };
+		7945FFB42A87E52D002D87A0 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 7945FFB32A87E52D002D87A0 /* Core */; };
+		7945FFB62A87E531002D87A0 /* Networking in Frameworks */ = {isa = PBXBuildFile; productRef = 7945FFB52A87E531002D87A0 /* Networking */; };
+		7945FFBB2A87E9C7002D87A0 /* BusinessDomain in Frameworks */ = {isa = PBXBuildFile; productRef = 7945FFBA2A87E9C7002D87A0 /* BusinessDomain */; };
 		79BCB05D2A87A35D003B2893 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BCB05C2A87A35D003B2893 /* AppDelegate.swift */; };
 		79BCB05F2A87A35D003B2893 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BCB05E2A87A35D003B2893 /* SceneDelegate.swift */; };
 		79BCB0612A87A35D003B2893 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79BCB0602A87A35D003B2893 /* ViewController.swift */; };
@@ -36,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		7945FFAE2A87E47B002D87A0 /* App+Depedencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "App+Depedencies.swift"; sourceTree = "<group>"; };
+		7945FFB92A87E972002D87A0 /* BusinessDomain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BusinessDomain; sourceTree = "<group>"; };
 		79BCB0592A87A35D003B2893 /* WeatherIdeoDigital.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherIdeoDigital.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		79BCB05C2A87A35D003B2893 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79BCB05E2A87A35D003B2893 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,7 +56,6 @@
 		79BCB07D2A87A35E003B2893 /* WeatherIdeoDigitalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIdeoDigitalUITests.swift; sourceTree = "<group>"; };
 		79BCB07F2A87A35E003B2893 /* WeatherIdeoDigitalUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIdeoDigitalUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		79BCB08C2A87A375003B2893 /* Networking */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = Networking; path = ../Networking; sourceTree = "<group>"; };
-		79BCB08D2A87A78E003B2893 /* Domain */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Domain; sourceTree = "<group>"; };
 		79BCB08E2A87A966003B2893 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +64,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7945FFBB2A87E9C7002D87A0 /* BusinessDomain in Frameworks */,
+				7945FFB62A87E531002D87A0 /* Networking in Frameworks */,
+				7945FFB42A87E52D002D87A0 /* Core in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,16 +87,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7945FFAD2A87E46E002D87A0 /* Dependencies */ = {
+			isa = PBXGroup;
+			children = (
+				7945FFAE2A87E47B002D87A0 /* App+Depedencies.swift */,
+			);
+			path = Dependencies;
+			sourceTree = "<group>";
+		};
+		7945FFB22A87E52D002D87A0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		79BCB0502A87A35D003B2893 = {
 			isa = PBXGroup;
 			children = (
 				79BCB08E2A87A966003B2893 /* Core */,
-				79BCB08D2A87A78E003B2893 /* Domain */,
+				7945FFB92A87E972002D87A0 /* BusinessDomain */,
 				79BCB08C2A87A375003B2893 /* Networking */,
 				79BCB05B2A87A35D003B2893 /* WeatherIdeoDigital */,
 				79BCB0722A87A35E003B2893 /* WeatherIdeoDigitalTests */,
 				79BCB07C2A87A35E003B2893 /* WeatherIdeoDigitalUITests */,
 				79BCB05A2A87A35D003B2893 /* Products */,
+				7945FFB22A87E52D002D87A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -105,6 +129,7 @@
 		79BCB05B2A87A35D003B2893 /* WeatherIdeoDigital */ = {
 			isa = PBXGroup;
 			children = (
+				7945FFAD2A87E46E002D87A0 /* Dependencies */,
 				79BCB05C2A87A35D003B2893 /* AppDelegate.swift */,
 				79BCB05E2A87A35D003B2893 /* SceneDelegate.swift */,
 				79BCB0602A87A35D003B2893 /* ViewController.swift */,
@@ -149,6 +174,11 @@
 			dependencies = (
 			);
 			name = WeatherIdeoDigital;
+			packageProductDependencies = (
+				7945FFB32A87E52D002D87A0 /* Core */,
+				7945FFB52A87E531002D87A0 /* Networking */,
+				7945FFBA2A87E9C7002D87A0 /* BusinessDomain */,
+			);
 			productName = WeatherIdeoDigital;
 			productReference = 79BCB0592A87A35D003B2893 /* WeatherIdeoDigital.app */;
 			productType = "com.apple.product-type.application";
@@ -221,6 +251,8 @@
 				Base,
 			);
 			mainGroup = 79BCB0502A87A35D003B2893;
+			packageReferences = (
+			);
 			productRefGroup = 79BCB05A2A87A35D003B2893 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -265,6 +297,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79BCB0612A87A35D003B2893 /* ViewController.swift in Sources */,
+				7945FFAF2A87E47B002D87A0 /* App+Depedencies.swift in Sources */,
 				79BCB05D2A87A35D003B2893 /* AppDelegate.swift in Sources */,
 				79BCB05F2A87A35D003B2893 /* SceneDelegate.swift in Sources */,
 			);
@@ -608,6 +641,21 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7945FFB32A87E52D002D87A0 /* Core */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Core;
+		};
+		7945FFB52A87E531002D87A0 /* Networking */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Networking;
+		};
+		7945FFBA2A87E9C7002D87A0 /* BusinessDomain */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BusinessDomain;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 79BCB0512A87A35D003B2893 /* Project object */;
 }

@@ -1,11 +1,11 @@
 import XCTest
-@testable import Domain
+@testable import BusinessDomain
 
-final class DomainTests: XCTestCase {
+final class BusinessDomainTests: XCTestCase {
     func testExample() throws {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct
         // results.
-        XCTAssertEqual(Domain().text, "Hello, World!")
+        XCTAssertEqual(BusinessDomain().text, "Hello, World!")
     }
 }
