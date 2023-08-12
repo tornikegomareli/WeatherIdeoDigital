@@ -7,6 +7,14 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>TBCX-Black.otf</string>
+		<string>TBCX-Bold.otf</string>
+		<string>TBCX-Light.otf</string>
+		<string>TBCX-Medium.otf</string>
+		<string>TBCX-Regular.otf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -12,10 +12,12 @@ import Networking
 
 class ViewController: UIViewController {
   @Dependency(\.currentWeatherRepository) var repository
+  
   private var currentTask: Task<Void, Error>?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+      view.backgroundColor = .white
       fetch()
     }
 
