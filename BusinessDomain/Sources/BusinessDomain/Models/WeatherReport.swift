@@ -12,6 +12,7 @@ public struct WeatherReport {
   public let weatherConditions: [WeatherCondition]
   public let mainWeatherData: WeatherData
   public let windInformation: WindInformation
+  public let clouds: CloudCoverage
   public let systemInformation: SystemInformation
   public let cityID: Int
   public let cityName: String
@@ -24,6 +25,7 @@ extension WeatherReport: Codable {
     case windInformation = "wind"
     case systemInformation = "sys"
     case mainWeatherData = "main"
+    case clouds = "clouds"
     case cityID  = "id"
     case cityName = "name"
   }

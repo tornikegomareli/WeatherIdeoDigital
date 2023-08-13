@@ -7,6 +7,12 @@
 
 import Foundation
 
-struct CloudCoverage: Codable {
-  let coveragePercentage: Int
+public struct CloudCoverage {
+  public let coveragePercentage: Int
+}
+
+extension CloudCoverage: Codable {
+  enum CodingKeys: String, CodingKey {
+    case coveragePercentage = "all"
+  }
 }

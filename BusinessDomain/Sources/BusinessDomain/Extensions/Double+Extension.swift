@@ -20,4 +20,11 @@ public extension Double {
   func toFahrenheit() -> Double {
     return self * 9 / 5 + 32
   }
+
+  func asString(style: DateComponentsFormatter.UnitsStyle) -> String {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = [.hour, .minute, .second, .nanosecond]
+    formatter.unitsStyle = style
+    return formatter.string(from: self) ?? ""
+  }
 }

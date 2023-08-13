@@ -88,9 +88,12 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
     self.actionsSubject.onNext(.onCurrentTemperature(temp: Int(weatherData.mainWeatherData.temperature)))
     self.actionsSubject.onNext(.onCurrentConditionIcon(icon: weatherData.weatherConditions.first?.iconID ?? ""))
     self.actionsSubject.onNext(.onCurrentCondition(text: weatherData.weatherConditions.first?.description ?? ""))
+    self.actionsSubject.onNext(.onWindInfo(value: weatherData.windInformation.speed))
+    self.actionsSubject.onNext(.onSunrise(value: weatherData.systemInformation.sunriseTimestamp))
+    self.actionsSubject.onNext(.onPressure(value: weatherData.clouds.coveragePercentage))
   }
 
-  func fetchCurrentLocationWeatherData() {
+  func fetchCurrentLocationWeatherData(with unit: WeatherInfoUnit = .metric) {
     getCurrentCityBasedOnLocation { [weak self] city in
       guard let self else {
         return
@@ -102,7 +105,7 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
         }
 
         do {
-          let weatherData = try await repository.fetchCurrentWeatherbyCity(name: city, unit: .metric, lang: nil)
+          let weatherData = try await repository.fetchCurrentWeatherbyCity(name: city, unit: unit, lang: nil)
           sendUpdateActions(self, weatherData)
           print(weatherData)
         } catch {

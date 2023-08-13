@@ -8,6 +8,7 @@
 import Foundation
 import RxSwift
 import RxCocoa
+import BusinessDomain
 import XCoordinator
 import PermissionsKit
 
@@ -21,16 +22,16 @@ extension CurrentWeatherScene {
     case onCurrentTemperature(temp: Int)
     case onCurrentConditionIcon(icon: String)
     case onCurrentCondition(text: String)
-    case onSunrise(value: String)
-    case onWindInfo(value: String)
-    case onPressure(value: String)
+    case onSunrise(value: Int)
+    case onWindInfo(value: Double)
+    case onPressure(value: Int)
   }
 }
 
 protocol CurrentWeatherViewModelInputs {
   func viewDidLoad()
   func fetchCurrentUserLocation()
-  func fetchCurrentLocationWeatherData()
+  func fetchCurrentLocationWeatherData(with unit: WeatherInfoUnit)
 }
 
 protocol CurrentWeatherViewModelOutputs {

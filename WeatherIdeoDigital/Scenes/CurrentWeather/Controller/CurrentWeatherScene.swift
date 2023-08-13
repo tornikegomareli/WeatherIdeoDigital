@@ -138,6 +138,7 @@ class CurrentWeatherScene: UIViewController {
     let view = UILabel()
     view.font = UIFont(name: "AdventPro-Regular", size: 18)
     view.alpha = 0
+    view.textColor = .white
     return view
   }()
 
@@ -161,6 +162,7 @@ class CurrentWeatherScene: UIViewController {
     let view = UILabel()
     view.font = UIFont(name: "AdventPro-Regular", size: 18)
     view.alpha = 0
+    view.textColor = .white
     return view
   }()
 
@@ -184,6 +186,7 @@ class CurrentWeatherScene: UIViewController {
     let view = UILabel()
     view.font = UIFont(name: "AdventPro-Regular", size: 18)
     view.alpha = 0
+    view.textColor = .white
     return view
   }()
 
@@ -232,6 +235,8 @@ class CurrentWeatherScene: UIViewController {
         owner.didReceive(newAction: action)
       })
       .disposed(by: disposeBag)
+
+    segmentControl.addTarget(self, action: #selector(segmentedControlValueChanged(_:)), for: .valueChanged)
   }
 
   private func didReceive(newAction action: ViewActions) {
@@ -280,7 +285,7 @@ class CurrentWeatherScene: UIViewController {
         }
 
         if isFinished {
-          self.viewModel.inputs.fetchCurrentLocationWeatherData()
+          self.viewModel.inputs.fetchCurrentLocationWeatherData(with: .metric)
         }
       }
     case .onCurrentTemperature(let temp):
@@ -337,12 +342,36 @@ class CurrentWeatherScene: UIViewController {
         self.weatherDescriptionLabel.text = text
         self.weatherDescriptionLabel.alpha = 1
       })
-    case .onSunrise(value: let value):
-      break
-    case .onWindInfo(value: let value):
-      break
-    case .onPressure(value: let value):
-      break
+    case .onSunrise(let value):
+      UIView.animate(withDuration: 0.5, animations: { [weak self] in
+        guard let self else {
+          return
+        }
+
+        self.sunriseLabel.text = value.fromTimeStampToHumanRedableTime()
+        self.sunriseLabel.alpha = 1
+        self.sunsriseIconImage.alpha = 1
+      })
+    case .onWindInfo(let value):
+      UIView.animate(withDuration: 0.5, animations: { [weak self] in
+        guard let self else {
+          return
+        }
+
+        self.windLabel.text = String(format: "%0.2f", value) + "M/S"
+        self.windLabel.alpha = 1
+        self.windIconImage.alpha = 1
+      })
+    case .onPressure(let value):
+      UIView.animate(withDuration: 0.5, animations: { [weak self] in
+        guard let self else {
+          return
+        }
+
+        self.cloudLabel.text = "\(value) %"
+        self.cloudLabel.alpha = 1
+        self.umbrellaIconImage.alpha = 1
+      })
     }
   }
 
@@ -401,8 +430,7 @@ class CurrentWeatherScene: UIViewController {
     }
 
     weatherInfoStackView.snp.remakeConstraints { make in
-      make.top.equalTo(weatherMainStackView.snp.bottom).offset(30)
-      make.trailing.equalToSuperview().offset(-60)
+      make.center.equalToSuperview()
     }
 
     sunsriseIconImage.snp.remakeConstraints { make in
@@ -437,8 +465,8 @@ class CurrentWeatherScene: UIViewController {
     }
   }
 
-  func fetch() {
-    
+  @objc func segmentedControlValueChanged(_ sender: BetterSegmentedControl) {
+    viewModel.inputs.fetchCurrentLocationWeatherData(with: sender.index == 0 ? .metric : .imperial)
   }
 }
 
