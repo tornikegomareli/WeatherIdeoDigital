@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Coordinates {
-  let longitude: Double
-  let latitude: Double
+public struct Coordinates {
+  public let longitude: Double
+  public let latitude: Double
 }
 
 extension Coordinates: Codable {

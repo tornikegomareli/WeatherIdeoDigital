@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct WindInformation: Codable {
-  let speed: Double
+public struct WindInformation: Codable {
+  public let speed: Double
 }

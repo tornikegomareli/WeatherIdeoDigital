@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct SystemInformation {
-  let type: Int
-  let systemID: Int
-  let countryISOCode: String
-  let sunriseTimestamp: Int
-  let sunsetTimestamp: Int
+public struct SystemInformation {
+  public let type: Int
+  public let systemID: Int
+  public let countryISOCode: String
+  public let sunriseTimestamp: Int
+  public let sunsetTimestamp: Int
 }
 
 extension SystemInformation: Codable {

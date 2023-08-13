@@ -7,11 +7,11 @@
 
 import Foundation
 
-struct WeatherCondition {
-  let conditionID: Int
-  let category: String
-  let description: String
-  let iconID: String
+public struct WeatherCondition {
+  public let conditionID: Int
+  public let category: String
+  public let description: String
+  public let iconID: String
 }
 
 extension WeatherCondition: Codable {

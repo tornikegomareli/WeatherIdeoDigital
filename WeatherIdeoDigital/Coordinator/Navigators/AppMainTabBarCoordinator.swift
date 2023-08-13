@@ -24,7 +24,7 @@ class AppMainTabBarCoordinator: TabBarCoordinator<AppMainTabBarRoute> {
   convenience init() {
     let currentWeatherCoordinator = CurrentWeatherTabBarCoordinator()
     currentWeatherCoordinator.rootViewController.tabBarItem = UITabBarItem(
-      title: "Current Weather",
+      title: "",
       image: nil,
       tag: 0
     )

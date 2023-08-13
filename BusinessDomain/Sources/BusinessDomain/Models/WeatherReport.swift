@@ -8,13 +8,13 @@
 import Foundation
 
 public struct WeatherReport {
-  let coordinates: Coordinates
-  let weatherConditions: [WeatherCondition]
-  let mainWeatherData: WeatherData
-  let windInformation: WindInformation
-  let systemInformation: SystemInformation
-  let cityID: Int
-  let cityName: String
+  public let coordinates: Coordinates
+  public let weatherConditions: [WeatherCondition]
+  public let mainWeatherData: WeatherData
+  public let windInformation: WindInformation
+  public let systemInformation: SystemInformation
+  public let cityID: Int
+  public let cityName: String
 }
 
 extension WeatherReport: Codable {

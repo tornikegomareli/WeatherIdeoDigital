@@ -10,6 +10,8 @@ import Networking
 
 public protocol CurrentWeatherRepositoring {
   func fetchCurrentWeather(lat: Double, long: Double, unit: WeatherInfoUnit?, lang: String?) async throws -> WeatherReport
+  func fetchCurrentWeatherbyCity(name: String, unit: WeatherInfoUnit?, lang: String?) async throws ->
+    WeatherReport
 }
 
 public final class CurrentWeatherRepository: CurrentWeatherRepositoring {
@@ -19,10 +21,15 @@ public final class CurrentWeatherRepository: CurrentWeatherRepositoring {
     self.service = service
   }
 
-  public func fetchCurrentWeather(lat: Double, long: Double, unit: WeatherInfoUnit? = WeatherInfoUnit.standard, lang: String?) async throws -> WeatherReport {
+  public func fetchCurrentWeather(lat: Double, long: Double, unit: WeatherInfoUnit? = WeatherInfoUnit.metric, lang: String?) async throws -> WeatherReport {
     let target = CurrentWeatherService.current(lat: lat, lon: long, unit: unit?.rawValue, lang: lang)
     return try await service.request(
       target
     )
+  }
+
+  public func fetchCurrentWeatherbyCity(name: String, unit: WeatherInfoUnit? = .metric, lang: String?) async throws -> WeatherReport {
+    let target = CurrentWeatherService.currentyByCity(name: name, unit: unit?.rawValue, lang: lang)
+    return try await service.request(target)
   }
 }

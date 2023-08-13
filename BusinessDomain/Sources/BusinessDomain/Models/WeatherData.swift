@@ -19,7 +19,7 @@ extension WeatherData: CustomStringConvertible {
   }
 }
 
-struct WeatherData: Codable {
+public struct WeatherData: Codable {
   /// Weather item's temperature values in Kelvin
   public var kelvin: (currentTemp: Double, maxTemp: Double, minTemp: Double) {
     get {
@@ -41,9 +41,9 @@ struct WeatherData: Codable {
     }
   }
 
-  let temperature: Double
-  let minimumTemperature: Double
-  let maximumTemperature: Double
+  public let temperature: Double
+  public let minimumTemperature: Double
+  public let maximumTemperature: Double
 
   enum CodingKeys: String, CodingKey {
     case temperature = "temp"
