@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CurrentWeatherScene.swift
 //  WeatherIdeoDigital
 //
 //  Created by Tornike on 12/08/2023.
@@ -10,7 +10,7 @@ import BusinessDomain
 import Dependencies
 import Networking
 
-class ViewController: UIViewController {
+class CurrentWeatherScene: UIViewController {
   @Dependency(\.currentWeatherRepository) var repository
   
   private var currentTask: Task<Void, Error>?

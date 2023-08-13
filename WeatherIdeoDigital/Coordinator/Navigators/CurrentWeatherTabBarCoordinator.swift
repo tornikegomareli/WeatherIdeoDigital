@@ -33,7 +33,7 @@ class CurrentWeatherTabBarCoordinator: NavigationCoordinator<CurrentWeatherRoute
     func makeViewController(for route: CurrentWeatherRoute) -> UIViewController {
       switch route {
       case .main:
-        return ViewController()
+        return CurrentWeatherScene()
       default:
         fatalError("Error has occurred")
       }
