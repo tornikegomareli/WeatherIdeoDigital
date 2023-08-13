@@ -32,6 +32,6 @@ class MainViewModel: NSObject, MainViewModelInputs, MainViewModelOutputs {
   }
 
   func presentApplication() {
-    coordinator.trigger(.application)
+    coordinator.trigger(.splashScene)
   }
 }

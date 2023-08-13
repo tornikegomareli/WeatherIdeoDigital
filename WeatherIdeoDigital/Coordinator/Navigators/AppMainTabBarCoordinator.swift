@@ -14,6 +14,7 @@ import WeatherUI
 enum AppMainTabBarRoute: Route {
   case mainCurrentWeather
   case randomThreePlace
+  case dismiss
 }
 
 class AppMainTabBarCoordinator: TabBarCoordinator<AppMainTabBarRoute> {
@@ -53,6 +54,17 @@ class AppMainTabBarCoordinator: TabBarCoordinator<AppMainTabBarRoute> {
 
       self.trigger(selectedItem.route)
       return false
+    }
+  }
+
+  override func prepareTransition(for route: AppMainTabBarRoute) -> TabBarTransition {
+    switch route {
+    case .mainCurrentWeather:
+      return .select(currentWeatherRouter)
+    case .dismiss:
+      return .dismiss()
+    default:
+      return .none()
     }
   }
 }
