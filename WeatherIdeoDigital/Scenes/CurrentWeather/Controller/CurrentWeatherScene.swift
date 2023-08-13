@@ -20,6 +20,7 @@ import Core
 class CurrentWeatherScene: UIViewController {
   @Dependency(\.currentWeatherRepository) var repository
   private let disposeBag = DisposeBag()
+  private var temperatureTypeCharacter = "℃"
 
   // MARK: Views
   private lazy var locationStackView: UIStackView = {
@@ -129,6 +130,7 @@ class CurrentWeatherScene: UIViewController {
 
   private lazy var transperentCardView: TransperentCardView = {
     let view = TransperentCardView(frame: .zero)
+    view.alpha = 0
     return view
   }()
 
@@ -258,12 +260,25 @@ class CurrentWeatherScene: UIViewController {
     case .idle:
       break
     case .onCitiesFetch(let citiesWeatherReport):
+      citiesStackView.arrangedSubviews.forEach { view in
+        view.removeFromSuperview()
+      }
+
       for weatherReport in citiesWeatherReport {
         let view = CityWeatherView(frame: .zero)
         view.configure(cityName: weatherReport.cityName, weatherIcon: weatherReport.weatherConditions.first?.iconID ?? "", temperature: weatherReport.mainWeatherData.temperature)
       
         citiesStackView.addArrangedSubview(view)
       }
+
+      UIView.animate(withDuration: 0.5, animations: { [weak self] in
+        guard let self else {
+          return
+        }
+
+        self.transperentCardView.alpha = 1
+      })
+
     case .randomBackgroundAnimation(let name):
       startGifAnimation(with: name)
     case .locasionPermissionUpdated(let status):
@@ -316,7 +331,7 @@ class CurrentWeatherScene: UIViewController {
           return
         }
 
-        self.weatherTempLabel.text = "\(temp) ℃"
+        self.weatherTempLabel.text = "\(temp) \(temperatureTypeCharacter)"
         self.weatherTempLabel.alpha = 1
       })
     case .onCurrentConditionIcon(let icon):
@@ -509,6 +524,9 @@ class CurrentWeatherScene: UIViewController {
 
   @objc func segmentedControlValueChanged(_ sender: BetterSegmentedControl) {
     viewModel.inputs.fetchCurrentLocationWeatherData(with: sender.index == 0 ? .metric : .imperial)
+    viewModel.inputs.fetchCities(with: sender.index == 0 ? .metric : .imperial)
+
+    temperatureTypeCharacter = sender.index == 0 ? "℃" : "℉"
   }
 }
 
