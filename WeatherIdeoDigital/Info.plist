@@ -14,6 +14,16 @@
 		<string>TBCX-Light.otf</string>
 		<string>TBCX-Medium.otf</string>
 		<string>TBCX-Regular.otf</string>
+		<string>AdventPro-Light.ttf</string>
+		<string>AdventPro-Bold.ttf</string>
+		<string>AdventPro-ExtraLight.ttf</string>
+		<string>AdventPro-Medium.ttf</string>
+		<string>AdventPro-Regular.ttf</string>
+		<string>AdventPro-SemiBold.ttf</string>
+		<string>AdventPro-Thin.ttf</string>
+		<string>Rubik-Black.ttf</string>
+		<string>Rubik-BoldItalic.ttf</string>
+		<string>Rubik-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
