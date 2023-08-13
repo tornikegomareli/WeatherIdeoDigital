@@ -27,7 +27,7 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
   @Dependency(\.appCoordinator) var coordinator
   @Dependency(\.currentWeatherRepository) var repository
 
-  private var locationManager: CLLocationManager?
+  private var locationManager: CLLocationManager
   private var currentTask: Task<Void, Error>?
   private var activeBackgroundGifs: [String] = [
     "day2",
@@ -47,20 +47,14 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
   override init() {
     actions = actionsSubject
       .asDriver(onErrorJustReturn: .idle)
+    locationManager = CLLocationManager()
 
     super.init()
+    locationManager.delegate = self
   }
 
   private func getCurrentCityBasedOnLocation(completion: @escaping (String) -> Void) {
-    guard let locationManager = locationManager, let location = locationManager.location else {
-      return
-    }
-
-    location.fetchCityAndCountry { [weak self] city, _, _ in
-      guard let self else {
-        return
-      }
-
+    locationManager.location?.fetchCityAndCountry {city, _, _ in
       guard let city = city else {
         return
       }
@@ -136,14 +130,9 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
       }
     }
   }
-  
-  func fetchCurrentUserLocation() {
-    if CLLocationManager.locationServicesEnabled() {
-      locationManager = CLLocationManager()
-      locationManager?.delegate = self
-      locationManager?.desiredAccuracy = kCLLocationAccuracyBest
-      locationManager?.startUpdatingLocation()
-    }
+
+  func redrawBackgroundAnimation() {
+    actionsSubject.onNext(.randomBackgroundAnimation(name: getRandomGifName()))
   }
 
   deinit {
@@ -167,6 +156,13 @@ extension CurrentWeatherViewModel: CLLocationManagerDelegate {
       let dayOfWeekAndDate = Date().dayOfWeekAndDate()
       self.actionsSubject.onNext(.onCurrentDate(dateString: dayOfWeekAndDate))
       self.actionsSubject.onNext(.onUpdatedCity(cityName: city))
+    }
+  }
+
+  func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+    let status = manager.authorizationStatus
+    if status == .authorizedWhenInUse || status == .authorizedAlways {
+      manager.startUpdatingLocation()
     }
   }
 }

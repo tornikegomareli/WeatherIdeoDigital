@@ -54,6 +54,8 @@ class CurrentWeatherScene: UIViewController {
 
   private lazy var locationAnimationView: LottieAnimationView = {
     let view = LottieAnimationView(name: "locate.json")
+
+    view.alpha = 0
     return view
   }()
 
@@ -239,10 +241,15 @@ class CurrentWeatherScene: UIViewController {
     setup()
     configureNavigationBar()
     layout()
-
-    locationAnimationView.play()
     bind()
     viewModel.inputs.viewDidLoad()
+    becomeFirstResponder()
+  }
+
+  override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    if motion == .motionShake {
+      viewModel.inputs.redrawBackgroundAnimation()
+    }
   }
 
   private func bind() {
@@ -296,7 +303,7 @@ class CurrentWeatherScene: UIViewController {
         weatherMainStackView.isHidden = false
         weatherInfoStackView.isHidden = false
         locationStackView.isHidden = false
-        viewModel.inputs.fetchCurrentUserLocation()
+        //viewModel.inputs.fetchCurrentUserLocation()
         viewModel.inputs.fetchCities(with: .metric)
       }
     case .onCurrentDate(let dateString):
@@ -315,6 +322,8 @@ class CurrentWeatherScene: UIViewController {
         }
 
         self.cityNameLabel.alpha = 1
+        self.locationAnimationView.alpha = 1
+        self.locationAnimationView.play()
         self.cityNameLabel.text = cityName
       }) { [weak self] isFinished in
         guard let self else {
