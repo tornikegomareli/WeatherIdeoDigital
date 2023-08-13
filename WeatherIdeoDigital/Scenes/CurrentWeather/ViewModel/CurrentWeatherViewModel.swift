@@ -29,6 +29,7 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
 
   private var locationManager: CLLocationManager
   private var currentTask: Task<Void, Error>?
+  private var geocoder = CLGeocoder()
   private var activeBackgroundGifs: [String] = [
     "day2",
     "day3",
@@ -54,12 +55,18 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
   }
 
   private func getCurrentCityBasedOnLocation(completion: @escaping (String) -> Void) {
-    locationManager.location?.fetchCityAndCountry {city, _, _ in
-      guard let city = city else {
+    guard let location = locationManager.location else {
+      return
+    }
+
+    geocoder.reverseGeocodeLocation(location) { placemarks, error in
+      guard let placemark = placemarks?.first, error == nil else {
+        print("Error fetching city name:", error ?? "Unknown error")
         return
       }
 
-      completion(city)
+      let cityName = placemark.administrativeArea ?? "City name not found"
+      completion(cityName)
     }
   }
 
@@ -141,21 +148,22 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
   }
 }
 
+
 extension CurrentWeatherViewModel: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     let location = locations.last! as CLLocation
-    location.fetchCityAndCountry { [weak self] city, country, error in
-      guard let self else {
+
+    geocoder.reverseGeocodeLocation(location) { placemarks, error in
+      guard let placemark = placemarks?.first, error == nil else {
+        print("Error fetching city name:", error ?? "Unknown error")
         return
       }
 
-      guard let city = city else {
-        return
-      }
+      let cityName = placemark.administrativeArea ?? "City name not found"
 
       let dayOfWeekAndDate = Date().dayOfWeekAndDate()
       self.actionsSubject.onNext(.onCurrentDate(dateString: dayOfWeekAndDate))
-      self.actionsSubject.onNext(.onUpdatedCity(cityName: city))
+      self.actionsSubject.onNext(.onUpdatedCity(cityName: cityName))
     }
   }
 
