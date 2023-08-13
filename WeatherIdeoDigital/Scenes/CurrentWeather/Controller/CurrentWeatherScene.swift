@@ -92,6 +92,15 @@ class CurrentWeatherScene: UIViewController {
     return view
   }()
 
+  private lazy var citiesStackView: UIStackView = {
+    let view = UIStackView()
+    view.axis = .horizontal
+    view.alignment = .fill
+    view.distribution = .fillEqually
+    view.spacing = 5
+    return view
+  }()
+
   private lazy var weatherTempLabel: UILabel = {
     let view = UILabel()
     view.font = UIFont(name: "AdventPro-Light", size: 50)
@@ -115,6 +124,11 @@ class CurrentWeatherScene: UIViewController {
     view.alignment = .fill
     view.distribution = .fill
     view.spacing = 10
+    return view
+  }()
+
+  private lazy var transperentCardView: TransperentCardView = {
+    let view = TransperentCardView(frame: .zero)
     return view
   }()
 
@@ -243,6 +257,13 @@ class CurrentWeatherScene: UIViewController {
     switch action {
     case .idle:
       break
+    case .onCitiesFetch(let citiesWeatherReport):
+      for weatherReport in citiesWeatherReport {
+        let view = CityWeatherView(frame: .zero)
+        view.configure(cityName: weatherReport.cityName, weatherIcon: weatherReport.weatherConditions.first?.iconID ?? "", temperature: weatherReport.mainWeatherData.temperature)
+      
+        citiesStackView.addArrangedSubview(view)
+      }
     case .randomBackgroundAnimation(let name):
       startGifAnimation(with: name)
     case .locasionPermissionUpdated(let status):
@@ -261,6 +282,7 @@ class CurrentWeatherScene: UIViewController {
         weatherInfoStackView.isHidden = false
         locationStackView.isHidden = false
         viewModel.inputs.fetchCurrentUserLocation()
+        viewModel.inputs.fetchCities(with: .metric)
       }
     case .onCurrentDate(let dateString):
       UIView.animate(withDuration: 0.5, animations: { [weak self] in
@@ -381,6 +403,8 @@ class CurrentWeatherScene: UIViewController {
     view.addSubview(locationStackView)
     view.addSubview(weatherMainStackView)
     view.addSubview(weatherInfoStackView)
+    view.addSubview(transperentCardView)
+    transperentCardView.addSubview(citiesStackView)
 
     // Top Left Stack view
     locationStackView.addArrangedSubview(childLocationStackView)
@@ -420,6 +444,13 @@ class CurrentWeatherScene: UIViewController {
       make.size.equalTo(40)
     }
 
+    citiesStackView.snp.remakeConstraints { make in
+      make.leading.equalToSuperview().offset(15)
+      make.trailing.equalToSuperview().offset(-15)
+      make.top.equalToSuperview().offset(10)
+      make.bottom.equalToSuperview().offset(-10)
+    }
+
     weatherMainStackView.snp.remakeConstraints { make in
       make.trailing.equalToSuperview().offset(-40)
       make.top.equalToSuperview().offset(160)
@@ -444,6 +475,17 @@ class CurrentWeatherScene: UIViewController {
     umbrellaIconImage.snp.remakeConstraints { make in
       make.size.equalTo(22)
     }
+
+    transperentCardView.snp.remakeConstraints { make in
+      make.leading.equalToSuperview().offset(10)
+      make.trailing.equalToSuperview().offset(-10)
+      make.bottom.equalToSuperview().offset(-10)
+      make.height.equalTo(150)
+    }
+  }
+
+  override func viewWillLayoutSubviews() {
+    transperentCardView.makeRoundedCorners(.allCorners, withRadius: 24, clipsToBounds: true)
   }
 
   private func startGifAnimation(with name: String) {

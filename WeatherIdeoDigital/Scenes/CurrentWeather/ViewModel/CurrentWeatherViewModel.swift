@@ -114,6 +114,28 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
       }
     }
   }
+
+  func fetchCities(with unit: WeatherInfoUnit) {
+    self.currentTask = Task.detached(priority: .background) { [weak self] in
+      guard let self else {
+        return
+      }
+
+      // Milan, New York, Telaviv
+      let preConditionedCities = ["3173435", "2988507", "293397"]
+      do {
+        let weatherDataList = try await repository.fetchCurrentWeatherByCities(
+          ids: preConditionedCities,
+          unit: unit,
+          lang: nil
+        )
+
+        self.actionsSubject.onNext(.onCitiesFetch(citeisWeatherData: weatherDataList.listOfWeather))
+      } catch {
+        print(error)
+      }
+    }
+  }
   
   func fetchCurrentUserLocation() {
     if CLLocationManager.locationServicesEnabled() {

@@ -25,6 +25,7 @@ extension CurrentWeatherScene {
     case onSunrise(value: Int)
     case onWindInfo(value: Double)
     case onPressure(value: Int)
+    case onCitiesFetch(citeisWeatherData: [WeatherReport])
   }
 }
 
@@ -32,6 +33,7 @@ protocol CurrentWeatherViewModelInputs {
   func viewDidLoad()
   func fetchCurrentUserLocation()
   func fetchCurrentLocationWeatherData(with unit: WeatherInfoUnit)
+  func fetchCities(with unit: WeatherInfoUnit)
 }
 
 protocol CurrentWeatherViewModelOutputs {

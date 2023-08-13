@@ -8,8 +8,8 @@
 import Foundation
 
 public struct SystemInformation {
-  public let type: Int
-  public let systemID: Int
+  public let type: Int?
+  public let systemID: Int?
   public let countryISOCode: String
   public let sunriseTimestamp: Int
   public let sunsetTimestamp: Int
