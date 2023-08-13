@@ -59,14 +59,8 @@ class CurrentWeatherViewModel: BaseViewModel, CurrentWeatherViewModelInputs, Cur
       return
     }
 
-    geocoder.reverseGeocodeLocation(location) { placemarks, error in
-      guard let placemark = placemarks?.first, error == nil else {
-        print("Error fetching city name:", error ?? "Unknown error")
-        return
-      }
-
-      let cityName = placemark.administrativeArea ?? "City name not found"
-      completion(cityName)
+    location.fetchCityAndCountry { city, country, error in
+      completion(city ?? "")
     }
   }
 
@@ -153,17 +147,14 @@ extension CurrentWeatherViewModel: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     let location = locations.last! as CLLocation
 
-    geocoder.reverseGeocodeLocation(location) { placemarks, error in
-      guard let placemark = placemarks?.first, error == nil else {
-        print("Error fetching city name:", error ?? "Unknown error")
+    location.fetchCityAndCountry { [weak self] city, country, error in
+      guard let self else {
         return
       }
 
-      let cityName = placemark.administrativeArea ?? "City name not found"
-
       let dayOfWeekAndDate = Date().dayOfWeekAndDate()
       self.actionsSubject.onNext(.onCurrentDate(dateString: dayOfWeekAndDate))
-      self.actionsSubject.onNext(.onUpdatedCity(cityName: cityName))
+      self.actionsSubject.onNext(.onUpdatedCity(cityName: city ?? ""))
     }
   }
 
